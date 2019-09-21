@@ -3,6 +3,11 @@ data <- read.csv("~/LearningR/AW_data.csv", header = TRUE)
 str(data)
 View(data)
 
+library(xgboost)
+library(magrittr)
+library(dplyr)
+library(Matrix)
+
 data$Education <- as.factor(data$Education)
 data$Gender <- as.factor(data$Gender)
 data$MaritalStatus <- as.factor(data$MaritalStatus)
@@ -19,7 +24,7 @@ test <- data[ind == 2,]
 
 #Create Matrix - One Hot Encoding for Factor Variables
 # This will convert factor variables into dummies and keep the numeric variables unchanged.
-trainm <- sparse.model.matrix(BikeBuyer~. -1, data = train) # First column is banking crisis variable so we use -1.
+trainm <- sparse.model.matrix(BikeBuyer~. -1, data = train) # First column is our label i.e.the banking crisis variable so we use -1.
 head(trainm)
 #We specify our response variable here.
 train_label <- train[,"BikeBuyer"]
